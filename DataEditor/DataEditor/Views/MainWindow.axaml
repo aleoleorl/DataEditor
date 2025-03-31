@@ -1,0 +1,154 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:vm="using:DataEditor.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		x:Name="Root"
+        x:Class="DataEditor.MainWindow"
+		x:DataType="vm:MainWindowViewModel"
+        Title="Data Editor">
+	<Window.DataContext>
+		<vm:MainWindowViewModel />
+	</Window.DataContext>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+		
+		<StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+			
+			<StackPanel Name="DefaultScreen" HorizontalAlignment="Center" VerticalAlignment="Center">
+				<TextBlock Text="Data Editor. v1.0" HorizontalAlignment="Center"/>
+				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+					<Button Content="Log In" Click="OnLogInButtonClick"/>
+					<Button Content="Sign Up" Click="OnSignUpButtonClick"/>
+				</StackPanel>
+			</StackPanel>
+
+			<StackPanel Name="LogInScreen" IsVisible="False" HorizontalAlignment="Center" VerticalAlignment="Center">
+				<TextBlock Text="Enter your credentials"/>
+				<Button Content="Sign Up" Click="OnSignUpButtonClick"/>
+				<TextBlock Text="Login"/>
+				<TextBox Name="LoginTextBox"/>
+				<TextBlock Text="Password"/>
+				<TextBox Name="PasswordTextBox" PasswordChar="*"/>
+				<Button Content="OK" Click="OnLogInOkButtonClick"/>
+				<TextBlock Name="LogInStatusLabel"/>
+			</StackPanel>
+
+			<StackPanel Name="SignUpScreen" IsVisible="False" HorizontalAlignment="Center" VerticalAlignment="Center">
+				<TextBlock Text="Create new user"/>
+				<Button Content="Log In" Click="OnLogInButtonClick"/>
+				<TextBlock Text="Login"/>
+				<TextBox Name="SignUpLoginTextBox"/>
+				<TextBlock Text="Password"/>
+				<TextBox Name="SignUpPasswordTextBox" PasswordChar="*"/>
+				<Button Content="OK" Click="OnSignUpOkButtonClick"/>
+				<TextBlock Name="SignUpStatusLabel"/>
+			</StackPanel>			
+
+			<StackPanel Name="EmptyMainScreen" IsVisible="False" HorizontalAlignment="Center" VerticalAlignment="Center">
+				<StackPanel Name="ModesPanel" IsVisible="False" HorizontalAlignment="Center" VerticalAlignment="Center">
+					<Border x:Name="ModesPanelBorder" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Background="LemonChiffon" BorderThickness="2" BorderBrush="LightCoral">
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="300" />
+								<RowDefinition Height="*" />
+							</Grid.RowDefinitions>
+
+							<Grid Grid.Row="0" Margin="5">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="Auto" />
+									<ColumnDefinition Width="*" />
+								</Grid.ColumnDefinitions>
+							</Grid>
+
+							<DataGrid x:Name="ModesPanelGrid" IsVisible="True" ItemsSource="{Binding ModelMode}" ClipboardCopyMode="None"
+									  AutoGenerateColumns="False" CanUserSortColumns="False"
+									  BorderThickness="2" BorderBrush="LightCoral">
+								<DataGrid.Columns>
+									<DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="0.225*" IsReadOnly="True" />
+									<DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="0.225*"/>
+									<DataGridTextColumn Header="MaxBottleNumber" Binding="{Binding MaxBottleNumber}" Width="0.225*"/>
+									<DataGridTextColumn Header="MaxUsedTips" Binding="{Binding MaxUsedTips}" Width="0.225*"/>
+									<DataGridTemplateColumn Header="(del row)" Width="0.10*">
+										<DataGridTemplateColumn.CellTemplate>
+											<DataTemplate>
+												<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+													<Button Content="-"
+															Command="{Binding #Root.((vm:MainWindowViewModel)DataContext).DeleteRowModeCommand, 
+										RelativeSource={RelativeSource AncestorType=DataGrid}}"
+															CommandParameter="{Binding}"/>
+												</StackPanel>
+											</DataTemplate>
+										</DataGridTemplateColumn.CellTemplate>
+									</DataGridTemplateColumn>
+								</DataGrid.Columns>
+							</DataGrid>
+						</Grid>
+					</Border>
+					<Button Content="add new line" Command="{Binding AddNewRowModeCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+				</StackPanel>
+				<StackPanel Name="StepsPanel" IsVisible="False" HorizontalAlignment="Center" VerticalAlignment="Center">
+					<Border x:Name="StepsPanelBorder" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Background="LemonChiffon" BorderThickness="2" BorderBrush="LightCoral">
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="300" />
+								<RowDefinition Height="*" />
+							</Grid.RowDefinitions>
+
+							<Grid Grid.Row="0" Margin="5">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="Auto" />
+									<ColumnDefinition Width="*" />
+								</Grid.ColumnDefinitions>
+							</Grid>
+
+							<DataGrid x:Name="StepsPanelGrid" IsVisible="True" ItemsSource="{Binding ModelStep}" ClipboardCopyMode="None"
+									  AutoGenerateColumns="False" CanUserSortColumns="False"
+									  BorderThickness="2" BorderBrush="LightCoral">
+								<DataGrid.Columns>
+									<DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="0.225*" IsReadOnly="True" />
+									<DataGridTextColumn Header="ModeId" Binding="{Binding ModeId}" Width="0.225*"/>
+									<DataGridTextColumn Header="Timer" Binding="{Binding Timer}" Width="0.225*"/>
+									<DataGridTextColumn Header="Destination" Binding="{Binding Destination}" Width="0.225*"/>
+									<DataGridTextColumn Header="Speed" Binding="{Binding Speed}" Width="0.225*"/>
+									<DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="0.225*"/>
+									<DataGridTextColumn Header="Volume" Binding="{Binding Volume}" Width="0.225*"/>
+									<DataGridTemplateColumn Header="(del row)" Width="0.10*">
+										<DataGridTemplateColumn.CellTemplate>
+											<DataTemplate>
+												<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+													<Button Content="-"
+															Command="{Binding #Root.((vm:MainWindowViewModel)DataContext).DeleteRowStepCommand, 
+										RelativeSource={RelativeSource AncestorType=DataGrid}}"
+															CommandParameter="{Binding}"/>
+												</StackPanel>
+											</DataTemplate>
+										</DataGridTemplateColumn.CellTemplate>
+									</DataGridTemplateColumn>
+								</DataGrid.Columns>
+							</DataGrid>
+						</Grid>
+					</Border>
+					<Button Content="add new line" Command="{Binding AddNewRowStepCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+				</StackPanel>
+			</StackPanel>
+		</StackPanel>
+
+		<TabControl Grid.Row="0" Grid.Column="0" Name="NavigationArea" IsVisible="False">
+			<TabItem Header="Navigation">
+				<StackPanel Orientation="Horizontal">
+					<Button Content="Modes" Click="OnModsButtonClick"/>
+					<Button Content="Steps" Click="OnStepsButtonClick"/>
+					<Button Content="Sign out" Click="OnSigoutButtonClick"/>
+				</StackPanel>
+			</TabItem>
+		</TabControl>
+	</Grid>
+</Window>
