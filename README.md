@@ -1,6 +1,7 @@
 # DataEditor
 
 Task 
+
 Задача - разработать приложение на Avalonia или WPF (желательно .NET 8), 
 при запуске ПО создается (если она отсутствует) база данных SQLite 
 с 2 таблицами, связанных между собой: Modes и Steps. 
@@ -15,3 +16,8 @@ Steps имеет столбцы ID, ModeId, Timer, Destination, Speed, Type, Vol
 минимум 6 символов, из которых обязательно должна быть 1 цифра и 1 буква.
 
 Результат - в виде установщика, код задеплоить на Git.
+
+
+Warning
+
+The repository branch weights ~47Mb because of installer file.
