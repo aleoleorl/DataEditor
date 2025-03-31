@@ -1,6 +1,6 @@
 # DataEditor
 
-Task 
+**Task** 
 
 Задача - разработать приложение на Avalonia или WPF (желательно .NET 8), 
 при запуске ПО создается (если она отсутствует) база данных SQLite 
@@ -17,7 +17,8 @@ Steps имеет столбцы ID, ModeId, Timer, Destination, Speed, Type, Vol
 
 Результат - в виде установщика, код задеплоить на Git.
 
+<br>
 
-Warning
+**Warning**
 
 The repository branch weights ~47Mb because of installer file.
